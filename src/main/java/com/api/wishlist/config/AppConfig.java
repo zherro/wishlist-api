@@ -10,6 +10,8 @@ import static com.api.wishlist.domain.converter.TypeConverter.safeParseStringToI
 @Component
 public class AppConfig {
 
+    public static final int MAX_ID_SIZE = 50;
+
     @Value("${api.wishlist.wishlistMaxSize}")
     private String wishlistMaxSize;
 

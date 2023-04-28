@@ -14,12 +14,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Document
+@Document(collection = WishItem.WISHLIST_COLLECTION_NAME)
 public class WishItem {
+
+    public static final String WISHLIST_COLLECTION_NAME = "cl_wish_item";
 
     @Id
     @EqualsAndHashCode.Include
     private String productId;
+
+    private String userId;
 
     private String description;
     private BigDecimal price;

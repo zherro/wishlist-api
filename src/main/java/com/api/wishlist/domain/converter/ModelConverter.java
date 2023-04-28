@@ -21,12 +21,19 @@ public abstract class ModelConverter<DTO, ENTITY> implements ModelMapperConverte
         this.mapper = mapper;
     }
 
-
     public ENTITY toEntity(final DTO dto) {
         return toEntity(dto, entityClass, mapper);
     }
 
     public DTO toDto(final ENTITY entity) {
         return toDto(entity, dtoClass, mapper);
+    }
+
+    public void mergeToEntity(final DTO source, ENTITY destination) {
+        mergeToEntity(source, destination, mapper);
+    }
+
+    public void mergeToDto(final ENTITY source, DTO destination) {
+        mergeToDto(source, destination, mapper);
     }
 }

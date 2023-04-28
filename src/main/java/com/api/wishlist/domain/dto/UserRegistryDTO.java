@@ -1,6 +1,6 @@
 package com.api.wishlist.domain.dto;
 
-import java.util.List;
+import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,5 +12,5 @@ public class UserRegistryDTO {
     private String userName;
     private String userEmail;
 
-    private List<WishItemDTO> wishList;
+    private Set<WishItemDTO> wishList;
 }

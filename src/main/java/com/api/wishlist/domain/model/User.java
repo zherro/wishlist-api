@@ -2,6 +2,7 @@ package com.api.wishlist.domain.model;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,9 +15,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
  *  User data
  */
 @Data
-@Document(collection = "user_wishlist")
+@Document(collection = User.USER_COLLECTION_NAME)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
+
+    public static final String USER_COLLECTION_NAME = "cl_user_wishlist";
 
     @Id
     @EqualsAndHashCode.Include
@@ -31,9 +34,17 @@ public class User {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    private Set<WishItem> wishList;
-
+    /**
+     * verifica se usuario ja foi persistido na base alguma vez
+     */
     public boolean isNew() {
         return Objects.isNull(createdAt);
+    }
+
+    /**
+     * retorna data de registro
+     */
+    public LocalDateTime getCreatedAt() {
+        return Optional.ofNullable(createdAt).orElse(LocalDateTime.now());
     }
 }
