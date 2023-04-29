@@ -29,11 +29,35 @@ de nova features.
 
 # Features
 
-**Objetivo**: Api para gerencia lista de sesejos de clientes, a principio essa api não faz a 
+**Objetivo**: Api para gerenciar lista de sesejos de clientes, a principio essa api não faz a 
 gestão de dados de usuarios ou produtos.
 
-### Adicionar um produto na Wishlist do cliente;
+### Adicionar um produto na Wishlist do cliente
 
+> POST: /api/{version}/registry
+
+Para adicionar itens a lista de desejo de um usuario não é necessario um pré cadastro.
+
+Uma vez que os dados são enviados todos os registro são devidamente atualizados.
+
+*PAYLOAD*
+
+```json
+    {
+      "userEmail": "string - email do user",
+      "userName": "string - nome do usuario/customer",
+      "userId": "string - identificador unico do usuario (max. 50 digitos)",
+      "wishList": [ 
+        {
+          "productId": "string - identificador unico do produto (max. 50 digitos)",
+          "description": "string - descricao do produto",
+          "price": 0, // Decimal - valor do produto quando foi adicionado a lista
+        }
+      ]
+    }
+```
+
+> GET: /api/{version}/{userId}
 
 
 

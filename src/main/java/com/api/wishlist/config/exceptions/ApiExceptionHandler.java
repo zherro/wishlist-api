@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Getter @AllArgsConstructor
-    protected class ErrorResponse {
+    protected static class ErrorResponse {
         private Integer code;
         private String message;
     }
@@ -29,8 +29,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Object> handleUncaught(NotFoundException ex, WebRequest request) {
 
-        var errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
-        return this.handleExceptionInternal(ex, errorResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+        var errorResponse = new ErrorResponse(HttpStatus.NO_CONTENT.value(), ex.getMessage());
+        return this.handleExceptionInternal(ex, errorResponse, new HttpHeaders(), HttpStatus.NO_CONTENT, request);
     }
 
     @ExceptionHandler(BlockAccessException.class)
