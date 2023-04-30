@@ -1,8 +1,7 @@
-package com.api.wishlist.controller.api.v1;
+package com.api.wishlist.controller.api;
 
-import com.api.wishlist.SpringTestContex;
+import com.api.wishlist.SpringTestContext;
 import com.api.wishlist.config.exceptions.BusinessException;
-import com.api.wishlist.controller.api.WishlistController;
 import com.api.wishlist.controller.request.ClearUserWishlistRequest;
 import com.api.wishlist.controller.request.RemoveUserWishlistItemRequest;
 import org.junit.jupiter.api.DisplayName;
@@ -13,11 +12,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class WishlistControllerImplTest extends SpringTestContex {
+class WishlistControllerImplTest extends SpringTestContext {
 
     @Autowired
     @Qualifier("WishlistController-V1")
     private WishlistController wishlistController;
+
+    @Autowired
+    @Qualifier("WishlistController-V2")
+    private WishlistController wishlistControllerV2;
 
 
     @Test
@@ -31,6 +34,7 @@ class WishlistControllerImplTest extends SpringTestContex {
         assertDoesNotThrow(() -> {
             var build = RemoveUserWishlistItemRequest.builder().userId("any-user-id").productId("any-prouct-id").build();
             wishlistController.removeUserWishlistItem(build);
+            wishlistControllerV2.removeUserWishlistItem(build);
         });
     }
 
@@ -40,6 +44,7 @@ class WishlistControllerImplTest extends SpringTestContex {
         assertThrows(BusinessException.class, () -> {
             var build = RemoveUserWishlistItemRequest.builder().userId(null).productId("").build();
             wishlistController.removeUserWishlistItem(build);
+            wishlistControllerV2.removeUserWishlistItem(build);
         });
     }
 
@@ -49,6 +54,7 @@ class WishlistControllerImplTest extends SpringTestContex {
         assertDoesNotThrow(() -> {
             var build = ClearUserWishlistRequest.builder().userId("any-user-id").build();
             wishlistController.clearUserWishlist(build);
+            wishlistControllerV2.clearUserWishlist(build);
         });
     }
 
@@ -58,6 +64,7 @@ class WishlistControllerImplTest extends SpringTestContex {
         assertThrows(BusinessException.class, () -> {
             var build = ClearUserWishlistRequest.builder().userId("").build();
             wishlistController.clearUserWishlist(build);
+            wishlistControllerV2.clearUserWishlist(build);
         });
     }
 }

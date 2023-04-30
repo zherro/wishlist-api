@@ -17,7 +17,7 @@ services:
     links:
       - mongo:mongo
     networks:
-      - mongo-compose-network
+      - wishlist-compose-network
 
   mongo:
     image: docker.io/mongo:5
@@ -35,7 +35,7 @@ services:
 #      - ./mongo_setup:/docker-entrypoint-initdb.d/
 #      - ./mongo_data:/data/db
     networks:
-      - mongo-compose-network
+      - wishlist-compose-network
 
 networks:
   mongo-compose-network:

@@ -1,9 +1,8 @@
-package com.api.wishlist.controller.api.v1;
+package com.api.wishlist.controller.api;
 
-import com.api.wishlist.SpringTestContex;
+import com.api.wishlist.SpringTestContext;
 import com.api.wishlist.builder.UserRegistryRequestBuilder;
 import com.api.wishlist.config.exceptions.BusinessException;
-import com.api.wishlist.controller.api.UserController;
 import com.api.wishlist.domain.model.User;
 import com.api.wishlist.repository.UserRepository;
 import com.api.wishlist.repository.WishlistRepository;
@@ -19,11 +18,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-class UserControllerImplTest extends SpringTestContex {
+class UserControllerImplTest extends SpringTestContext {
 
     @Autowired
     @Qualifier("UserController-V1")
     private UserController userController;
+
+    @Autowired
+    @Qualifier("UserController-V2")
+    private UserController userControllerV2;
 
     @MockBean
     private UserRepository userRepository;
@@ -37,6 +40,7 @@ class UserControllerImplTest extends SpringTestContex {
         var userRequest = new UserRegistryRequestBuilder().generateMock();
         when(userRepository.save(any())).thenReturn((new ModelMapper()).map(userRequest, User.class));
         assertDoesNotThrow(() -> userController.userRegistry(userRequest));
+        assertDoesNotThrow(() -> userControllerV2.userRegistry(userRequest));
     }
 
     @Test
@@ -47,15 +51,18 @@ class UserControllerImplTest extends SpringTestContex {
 
         userRequest.setUserEmail(null);
         assertThrows(BusinessException.class, () -> userController.userRegistry(userRequest));
+        assertThrows(BusinessException.class, () -> userControllerV2.userRegistry(userRequest));
 
 
         userRequest.setUserEmail("email@email.com");
         userRequest.setUserName("");
         assertThrows(BusinessException.class, () -> userController.userRegistry(userRequest));
+        assertThrows(BusinessException.class, () -> userControllerV2.userRegistry(userRequest));
 
         userRequest.setUserId("");
         userRequest.setUserName("um nome");
         assertThrows(BusinessException.class, () -> userController.userRegistry(userRequest));
+        assertThrows(BusinessException.class, () -> userControllerV2.userRegistry(userRequest));
     }
 
 }

@@ -24,14 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/auth")
-public class AuthController {
+public class AuthController implements  {
 
 	private final AuthenticationManager authenticationManager;
 	private final AuthRepository authRepository;
 	private final PasswordEncoder encoder;
 	private final JwtUtils jwtUtils;
 
-	@PostMapping("/signin")
+	@Override
 	public ResponseEntity<JwtResponse> authenticateUser(@RequestBody String passKey) {
 
 		var authentication = authenticationManager.authenticate(

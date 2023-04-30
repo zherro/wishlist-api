@@ -1,0 +1,58 @@
+version: '3.7'
+
+services:
+  wish-list-api:
+    image: zherro/wishlist-api:latest
+    #    restart: on-failure
+    ports:
+      - 8889:8081
+    environment:
+      SPRING_DATA_MONGODB_AUTHENTICATION_DATABASE: admin
+      SPRING_DATA_MONGODB_USERNAME: root
+      SPRING_DATA_MONGODB_PASSWORD: root
+      SPRING_DATA_MONGODB_DATABASE: wishlistDB
+      SPRING_DATA_MONGODB_PORT: 27017
+      SPRING_DATA_MONGODB_HOST: mongo
+      API_WISHLIST_DBCONNECTION_VALIDATE_URI: mongodb://root:root@mongo:27017
+    depends_on:
+      - mongo
+    links:
+      - mongo
+    networks:
+      - wishlist-compose-network
+
+  wishlist-express:
+    image: mongo-express:0.54.0
+#    restart: on-failure
+    ports:
+      - 8899:8081
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+    links:
+      - mongo
+    depends_on:
+      - mongo
+    networks:
+      - wishlist-compose-network
+
+  mongo:
+    image: docker.io/mongo:5
+    container_name: wishlist-mongo
+    environment:
+      MONGO_INITDB_DATABASE: wishlistDB
+      MONGO_DATABASE: wishlistDB
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - 27017:27017
+    networks:
+      - wishlist-compose-network
+
+networks:
+  wishlist-compose-network:
+    driver: bridge
