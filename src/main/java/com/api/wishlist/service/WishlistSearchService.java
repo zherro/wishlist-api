@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.support.PageableExecutionUtils;
@@ -17,9 +17,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class WishlistSearchService {
 
-    private final static int DEFAULT_PAGE_SIZE = 20;
+    private static final int DEFAULT_PAGE_SIZE = 20;
 
-    private final MongoTemplate mongoTemplate;
+    private final MongoOperations mongoOperations;
 
     public Page<WishItem> searchWishlist(final String productId, final String userId, final int page, final int size) {
 
@@ -34,10 +34,10 @@ public class WishlistSearchService {
             query.addCriteria(Criteria.where("userId").is(userId));
         }
 
-        var result = mongoTemplate.find(query, WishItem.class);
+        var result = mongoOperations.find(query.with(pageable), WishItem.class);
         return PageableExecutionUtils.getPage(
                 result,
                 pageable,
-                () -> mongoTemplate.count(Query.of(query).limit(-1).skip(-1), WishItem.class));
+                () -> mongoOperations.count(Query.of(query).limit(-1).skip(-1), WishItem.class));
     }
 }

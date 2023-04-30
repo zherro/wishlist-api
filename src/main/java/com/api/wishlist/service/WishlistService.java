@@ -54,12 +54,6 @@ public class WishlistService {
         wishlistRepository.saveAll(wishlist);
     }
 
-    /**
-     *
-     *
-     * @param userId - String - user id
-     * @param wishlistItemId - String - wishlist item id
-     */
     public void removeUserItem(final String userId, final String wishlistItemId) {
         wishlistRepository.deleteByProductIdAndUserId(wishlistItemId, userId);
     }

@@ -38,12 +38,12 @@ public class UserRegistryRequest {
     /**
      * validate user request DTO
      *
-     * @param wishListMaxSize - integer - value o max number of items accepted in wishList by user
+     * @param wishListMaxSize      - integer - value o max number of items accepted in wishList by user
+     * @param requiredEmailAndName
      */
-    public void validate(final int wishListMaxSize) {
+    public void validate(final int wishListMaxSize, final boolean requiredEmailAndName) {
         var isValid =  StringUtils.isNotEmpty(userId)
-                && StringUtils.isNotEmpty(userName)
-                && StringUtils.isNotEmpty(userEmail);
+                && (!requiredEmailAndName || (StringUtils.isNotEmpty(userName) && StringUtils.isNotEmpty(userEmail)));
 
         if(!isValid) {
             throw new BusinessException(ERROR_VALIDATION_MESSAGE);
@@ -69,10 +69,11 @@ public class UserRegistryRequest {
      *                      - TRUE: validate email patter
      *                      - FALSE: skip email patter validation
      */
-    public void validate(final int wishListMaxSize, final boolean validateEmail) {
-        validate(wishListMaxSize);
+    public void validate(final int wishListMaxSize, final boolean requiredEmailAndName, final boolean validateEmail) {
+        validate(wishListMaxSize, requiredEmailAndName);
 
-        var isValid = Pattern.compile(REGEX_PATTERN).matcher(userEmail).matches();
+        var isValid = Pattern.compile(REGEX_PATTERN).matcher(Optional.ofNullable(userEmail).orElse("")).matches();
+
         if(validateEmail && !isValid) {
             throw new BusinessException(ERROR_EMAIL_VALIDATION_MESSAGE);
         }

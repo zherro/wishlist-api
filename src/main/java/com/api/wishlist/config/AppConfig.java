@@ -1,6 +1,5 @@
 package com.api.wishlist.config;
 
-import com.api.wishlist.domain.converter.TypeConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -12,11 +11,19 @@ public class AppConfig {
 
     public static final int MAX_ID_SIZE = 50;
 
-    @Value("${api.wishlist.wishlistMaxSize}")
-    private String wishlistMaxSize;
+    private final String wishlistMaxSize;
 
-    @Value("${api.wishlist.validateUserEmailPattern}")
-    private String validateUserEmailPattern;
+    private final String validateUserEmailPattern;
+
+    private final String requiredUserEmailAndName;
+
+    public AppConfig(@Value("${api.wishlist.wishlistMaxSize}") String wishlistMaxSize,
+            @Value("${api.wishlist.validateUserEmailPattern}") String validateUserEmailPattern,
+            @Value("${api.wishlist.requiredUserEmailAndName}")String requiredUserEmailAndName) {
+        this.wishlistMaxSize = wishlistMaxSize;
+        this.validateUserEmailPattern = validateUserEmailPattern;
+        this.requiredUserEmailAndName = requiredUserEmailAndName;
+    }
 
     public Integer getWishlistMaxSize() {
         return safeParseStringToInt(wishlistMaxSize);
@@ -24,5 +31,9 @@ public class AppConfig {
 
     public Boolean getValidateUserEmailPattern() {
         return parseBoolean(validateUserEmailPattern);
+    }
+
+    public Boolean getRequiredUserEmailAndName() {
+        return parseBoolean(requiredUserEmailAndName);
     }
 }

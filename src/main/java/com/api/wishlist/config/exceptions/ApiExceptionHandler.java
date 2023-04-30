@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Getter @AllArgsConstructor
-    protected static class ErrorResponse {
+    public static class ErrorResponse {
         private Integer code;
         private String message;
     }
@@ -45,7 +45,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
             if(body == null) {
-                body = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());;
+                body = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
             }
 
             return super.handleExceptionInternal(ex, body, headers, status, request);

@@ -3,6 +3,7 @@ package com.api.wishlist.service;
 import com.api.wishlist.domain.model.ServiceClient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,17 +32,12 @@ public class AuthImpl implements UserDetails {
 	@Transactional
 	public static AuthImpl build(ServiceClient user) {
 
-		return new AuthImpl(
-				user.getId(), 
-				user.getName(),
-				user.getClientKey(),
-				user.getHashKey());
+		return new AuthImpl(user.getId(), user.getName(), user.getClientKey(), user.getHashKey());
 	}
 
 	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities()
-	{
-		return null;
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return List.of();
 	}
 
 	@Override

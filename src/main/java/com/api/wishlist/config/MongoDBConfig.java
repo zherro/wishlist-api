@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MongoDBConfig {
 
-    @Value("${api.wishlist.db-connection.validate.uri}")
+    @Value("${api.wishlist.dbconnection.validate.uri}")
     private String mongoConnectionUri;
 
     @Value("${spring.data.mongodb.database}")

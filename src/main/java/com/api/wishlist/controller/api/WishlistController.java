@@ -6,6 +6,7 @@ import com.api.wishlist.domain.model.WishItem;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public interface WishlistController {
 
     @ApiOperation(value = "Endpoit for search wishlist")
-    @PatchMapping("/search")
+    @GetMapping("/search")
     @ResponseStatus(HttpStatus.OK)
     Page<WishItem> searchByProduct( @RequestParam(required = false) String productId,
             @RequestParam(required = false) String userId,

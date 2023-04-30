@@ -1,6 +1,7 @@
 docker rm -f wishlist-api zherro/wishlist-api \
 && docker rmi -f wishlist-api zherro/wishlist-api \
 && ./gradlew clean build \
+&& ./gradlew build \
 && docker login \
 && docker build -t wishlist-api . \
 && docker tag wishlist-api:latest zherro/wishlist-api:latest \

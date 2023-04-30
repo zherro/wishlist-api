@@ -12,7 +12,7 @@ public abstract class ModelConverter<DTO, ENTITY> implements ModelMapperConverte
     private final Class<DTO> dtoClass;
     private final Class<ENTITY> entityClass;
 
-    public ModelConverter(ModelMapper mapper) {
+    protected ModelConverter(ModelMapper mapper) {
         ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
 
         this.dtoClass = (Class<DTO>) parameterizedType.getActualTypeArguments()[0];

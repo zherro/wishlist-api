@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Qualifier("UserControllerImpl-V2")
+@Qualifier("UserController-V2")
 @RestController
 @RequestMapping("api/v2")
 public class UserControllerV2Impl extends UserControllerImpl  {

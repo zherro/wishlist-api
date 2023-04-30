@@ -1,5 +1,6 @@
 package com.api.wishlist.config;
 
+import java.util.Collections;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -13,24 +14,18 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig {
+public class SwaggerConfig implements SwaggerAuthConfig {
 
+    public static final String AUTHORIZATION_HEADER = "Authorization";
+
+    /**
+     *  gera docket default que mostrar todos os endpoints disponiveis na api
+     * @return Docket
+     */
 //    @Bean
 //    public Docket api() {
 //        return new Docket(DocumentationType.SWAGGER_2);
 //    }
-//
-//    private ApiInfo apiInfo() {
-//        return new ApiInfo("MyApp Rest APIs",
-//                "APIs for MyApp.",
-//                "1.0",
-//                "Terms of service",
-//                new Contact("test", "www.org.com", "test@emaildomain.com"),
-//                "License of API",
-//                "API license URL",
-//                Collections.emptyList());
-//    }
-
 
     @Bean
     public Docket swaggerWishlistApiV1() {
@@ -42,22 +37,25 @@ public class SwaggerConfig {
         return getDocket("v2");
     }
 
-    private static Docket getDocket(final String version) {
+    private Docket getDocket(final String version) {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("wishlist-api-" + version)
+                .securityContexts(Collections.singletonList(securityContext()))
+                .securitySchemes(Collections.singletonList(apiKey()))
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.api.wishlist.controller.api." + version))
-                .paths(PathSelectors.ant("/api/" + version + "/*"))
+                .paths(PathSelectors.ant("/api/" + version + "/**"))
                 .build()
                 .apiInfo(getBuild(version));
     }
 
-    private static ApiInfo getBuild(final String version) {
+    private ApiInfo getBuild(final String version) {
         return new ApiInfoBuilder()
                 .version(version)
                 .title("Wishlist API")
-                .description("Documentation Wishlist API" + version)
+                .description("Documentation Wishlist API " + version)
                 .license("")
+                .licenseUrl("")
                 .contact(new Contact("Wish List API", "", ""))
                 .build();
     }

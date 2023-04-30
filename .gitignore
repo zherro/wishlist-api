@@ -36,4 +36,4 @@ out/
 ### VS Code ###
 .vscode/
 
-setup/mongo_data
+setup-local/mongo_data

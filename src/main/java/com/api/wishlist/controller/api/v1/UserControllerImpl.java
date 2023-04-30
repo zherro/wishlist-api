@@ -28,7 +28,7 @@ public class UserControllerImpl implements UserController {
     @Override
     public void userRegistry(UserRegistryRequest userRegistryRequest) {
 
-        userRegistryRequest.validate(appConfig.getWishlistMaxSize(), appConfig.getValidateUserEmailPattern());
+        userRegistryRequest.validate(appConfig.getWishlistMaxSize(), appConfig.getRequiredUserEmailAndName(), appConfig.getValidateUserEmailPattern());
 
         log.info("m=userRegistry, receipting user data of userId:{}", userRegistryRequest.getUserId());
 
