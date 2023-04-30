@@ -17,6 +17,7 @@ Desafio WishList
 - Mockito
 - JUnit ( v.5 )       - testes unitários
 - Jacoco ( v.0.8.10 ) - para relatorios de cobertura dos testes
+- Test Containers ( v1.18.0 )
 
 ### Versões
 
@@ -25,7 +26,7 @@ Esse é um exemplo de como podemos garantir retrocompatibilidade durante atualiz
 de nova features.
 
 - V1 - todas as funcionalidades, **NÃO** possui autenticação
-- V2 - todas as funcionalidades, possui autenticação
+- V2 - todas as funcionalidades, **possui autenticação**
 
 # Features
 
